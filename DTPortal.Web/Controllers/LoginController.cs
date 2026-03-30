@@ -14,6 +14,7 @@ using DTPortal.Web.ViewModel.Login;
 using Humanizer;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
@@ -36,6 +37,7 @@ using System.Threading.Tasks;
 
 namespace DTPortal.Web.Controllers
 {
+    [AllowAnonymous]
     public class LoginController : BaseController
     {
         private readonly IRoleManagementService _roleActivityService;

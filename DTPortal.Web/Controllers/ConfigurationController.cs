@@ -28,6 +28,7 @@ namespace DTPortal.Web.Controllers
 {
     //[Authorize(Roles = "Application Configuration")]
     //[ServiceFilter(typeof(SessionValidationAttribute))]
+    [AllowAnonymous]
     public class ConfigurationController : BaseController
     {
         private readonly IConfigurationService _configurationService;

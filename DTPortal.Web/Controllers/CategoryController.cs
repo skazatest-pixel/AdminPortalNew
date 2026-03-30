@@ -9,6 +9,7 @@ using DTPortal.Web.Constants;
 using DTPortal.Web.Enums;
 using DTPortal.Web.ViewModel;
 using DTPortal.Web.ViewModel.category;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
@@ -18,6 +19,7 @@ using System.Threading.Tasks;
 
 namespace DTPortal.Web.Controllers
 {
+    [AllowAnonymous]
     public class CategoryController : BaseController
     {
         private readonly ICategoryService _categoryService;

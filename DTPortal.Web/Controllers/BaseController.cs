@@ -11,9 +11,11 @@ using Newtonsoft.Json.Serialization;
 using ClosedXML.Excel;
 
 using DTPortal.Core.Utilities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DTPortal.Web.Controllers
 {
+    [AllowAnonymous]
     public abstract class BaseController : Controller
     {
         private readonly ILogClient _logClient;

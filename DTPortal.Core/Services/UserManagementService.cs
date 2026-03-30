@@ -722,7 +722,7 @@ namespace DTPortal.Core.Services
             tokenPayload.iat = (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)))
                 .TotalSeconds;
             tokenPayload.at_hash = string.Empty;
-            tokenPayload.iss = DTInternalConstants.DTPortalClientId;
+            tokenPayload.iss = _configuration["DTPortalClientId"];
             tokenPayload.aud = openidconnect.issuer;
             tokenPayload.nonce = AuthNSchemeConstants.FIDO2;
 

@@ -40,7 +40,7 @@ using System.Threading.Tasks;
 
 namespace DTPortal.Web.Controllers
 {
-
+    [AllowAnonymous]
     public class UserDashboardController : BaseController
     {
         private readonly IFido2 _fido2;

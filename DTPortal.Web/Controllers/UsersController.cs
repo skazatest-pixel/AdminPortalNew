@@ -1,6 +1,7 @@
 ﻿using DocumentFormat.OpenXml.Office2010.ExcelAc;
 using DTPortal.Core.Domain.Services;
 using DTPortal.Core.Domain.Services.Communication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ namespace DTPortal.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [AllowAnonymous]
     public class UsersController : ControllerBase
     {
         private readonly IUserManagementService _userService;

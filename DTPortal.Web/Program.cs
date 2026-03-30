@@ -177,7 +177,9 @@ async Task ConfigureServices(WebApplicationBuilder builder)
         {
             ["ConnectionStrings:IDPConnString"] = data["ConnectionStrings:AdminPortal"]?.ToString(),
             ["ConnectionStrings:RAConnString"] = data["ConnectionStrings:RAConnString"]?.ToString(),
-            ["RedisConnString"] = data["RedisConnString"]?.ToString()
+            ["RedisConnString"] = data["RedisConnString"]?.ToString(),
+            ["DTPortalClientId"] = data["DTPortalClientId"]?.ToString(),
+            ["GoogleMapAPIKey"] = data["GoogleMapAPIKey"]?.ToString()
         };
 
         // Inject Vault secrets into configuration
