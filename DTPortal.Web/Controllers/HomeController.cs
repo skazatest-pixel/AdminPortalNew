@@ -43,15 +43,16 @@ namespace DTPortal.Web.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult SetTheme(string data)
         {
-            CookieOptions cookie = new CookieOptions
+            var cookieOptions = new CookieOptions
             {
-                Expires = DateTimeOffset.UtcNow.AddYears(1),
-                Secure = true,               
-                HttpOnly = true,              
-                SameSite = SameSiteMode.Strict  
+                Secure = true,                  // Only over HTTPS
+                HttpOnly = true,                // Not accessible via JS
+                SameSite = SameSiteMode.Lax,    // Better balance than Strict
+                MaxAge = TimeSpan.FromDays(30), // Reduce lifetime
+                IsEssential = true              // (optional, for GDPR compliance)
             };
 
-            Response.Cookies.Append("theme", data, cookie);
+            Response.Cookies.Append("theme", data, cookieOptions);
             return Ok();
         }
         [HttpGet]

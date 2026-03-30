@@ -23,9 +23,11 @@ using DTPortal.Web.Constants;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DTPortal.Web.Controllers
 {
+    [AllowAnonymous]
     public class RegistrationController : BaseController
     {
         private readonly IFido2 fido2;

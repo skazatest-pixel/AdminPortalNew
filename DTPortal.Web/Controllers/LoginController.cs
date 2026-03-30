@@ -487,16 +487,16 @@ namespace DTPortal.Web.Controllers
         {
             // 1. Set the language cookie
             Response.Cookies.Append(
-        CookieRequestCultureProvider.DefaultCookieName,
-        CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
-        new CookieOptions
-        {
-            Expires = DateTimeOffset.UtcNow.AddYears(1),
-            HttpOnly = true,               
-            Secure = Request.IsHttps,       
-            SameSite = SameSiteMode.Lax       
-        }
-    );
+      CookieRequestCultureProvider.DefaultCookieName,
+      CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+      new CookieOptions
+      {
+          Secure = true,                      // Always enforce HTTPS
+          HttpOnly = true,                    // Prevent JS access
+          SameSite = SameSiteMode.Lax,        // Safe default
+          MaxAge = TimeSpan.FromDays(30)      // Reduce lifetime
+      }
+  );
             // 2. Check if a valid Return URL exists and is local (security practice)
             if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
             {
