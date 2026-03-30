@@ -1,0 +1,532 @@
+﻿@model DTPortal.Core.DTOs.SubscriberDetailsDTO
+
+<style>
+    .activities {
+        /*display: flex;*/
+        display: inline-block;
+        flex-direction: column;
+        align-content: center;
+        align-items: flex-start;
+        /*justify-content: center;*/
+    }
+
+    .activities1 {
+        align-items: center;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+    }
+
+    .activity {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 3px;
+    }
+
+    @@media (min-width: 1000px) {
+        .activities {
+            flex: 0 0 25%;
+        }
+    }
+
+    @@media (max-width: 1000px) {
+        .activities1 {
+            gap: 5px;
+        }
+    }
+
+    @@media (min-width: 1000px) and (max-width: 1100px) {
+        .activities {
+            flex: 0 0 50%;
+        }
+    }
+
+    @@media (max-width:650px) {
+        /* Stack Profile & Activities */
+        .profile-sidebar, .profile-content {
+            width: 100% !important;
+            float: none !important;
+            margin-bottom: 15px;
+        }
+
+        .profile-content {
+            margin-top: 10px;
+        }
+        /* Activities grid becomes single column */
+        #biography .activities {
+            width: 50% !important;
+            max-width: 100% !important;
+            flex: 0 0 100% !important;
+            border-right: none !important;
+            padding-bottom: 10px;
+        }
+        /* Remove forced row alignment */
+        #biography .row {
+            display: flex;
+            flex-direction: column;
+        }
+        /* Buttons stack nicely */
+        .activities1 {
+            flex-direction: column !important;
+            align-items: stretch !important;
+            gap: 10px;
+        }
+
+            .activities1 .btn {
+                width: 50% !important;
+                min-width: unset !important;
+            }
+        /* Profile image center */
+        .profile-userpic img {
+            display: block;
+            margin: 0 auto 10px auto;
+            width: 120px;
+            height: auto;
+        }
+        /* Profile list items stack */
+        ._profile {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 5px;
+        }
+
+            ._profile span {
+                float: none !important;
+            }
+        /* Improve spacing */
+        .card {
+            padding: 10px;
+        }
+    }
+
+
+
+
+
+    @@media (min-width: 650px) and (max-width: 900px) {
+        /* Override Bootstrap col-md-12 */
+        .container-fluid > .row > .col-md-12 {
+            display: flex;
+            flex-direction: row;
+            gap: 15px;
+        }
+        /* Profile column */
+        .profile-sidebar {
+            flex: 0 0 38%;
+            max-width: 38%;
+        }
+        /* Activities column */
+        .profile-content {
+            flex: 0 0 62%;
+            max-width: 62%;
+        }
+        
+        .profile-sidebar .card,
+        .profile-content {
+            height: 100%;
+        }
+
+        .profile-content {
+            display: flex;
+            flex-direction: column;
+            height: 75vh; 
+        }
+        /* Activities grid 2 columns */
+        #biography .activities {
+            flex: 0 0 50% !important;
+            max-width: 50% !important;
+        }
+        /* Buttons wrap nicely */
+        .activities1 {
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+            .activities1 .btn {
+                /*  flex: 1 1 48%; */
+                min-width: unset !important;
+            }
+    }
+
+
+
+
+    p {
+        text-align: left;
+    }
+</style>
+
+<div id="biography" style="padding: 0px 15px;">
+    <div class="row"  >
+        <div class="activities  col-6 b-r">
+            <strong>Subscriber Type</strong>
+            <p class="text-muted">@Model.SubscriberType</p>
+        </div>
+        <div class="activities   col-6 b-r">
+            <strong>OnBoarding Method</strong>
+            <p class="text-muted">@Model.OnBoardingMethod</p>
+        </div>
+        <div class="activities   col-6 b-r">
+            <strong>OnBoarding Time</strong>
+            <p class="text-muted">
+                @(DateTime.TryParse(Model.LastOnBoardingDate, out var parsedDate1)
+                                ? parsedDate1.ToString("dd-MM-yyyy HH:mm:ss")
+                                : Model.LastOnBoardingDate)
+            </p>
+            
+        </div>
+        <div class="activities   col-6">
+            <strong>Level Of Assurance</strong>
+            <p class="text-muted">@Model.LevelOfAssurance</p>
+        </div>
+    </div>
+    <div class="row"  >
+        <div class="activities   col-6 b-r">
+            <strong>Document Type</strong>
+            <p class="text-muted">@Model.DocumentType</p>
+        </div>
+        @if(Model.DocumentType=="PASSPORT"){
+        <div class="activities   col-6 b-r">
+            <strong>Document Number</strong>
+            <p class="text-muted">@Model.IdDocNumber</p>
+            </div>
+        }
+        else
+        {
+            <div class="activities   col-6 b-r">
+                <strong>Emirates Id Number</strong>
+                <p class="text-muted">@Model.IdDocNumber</p>
+            </div>
+        }
+        <div class="activities   col-6 b-r">
+            <strong>Device Registration Time</strong>
+            <p class="text-muted">
+                @(DateTime.TryParse(Model.DeviceRegistrationTime, out var parsedDate)
+                                ? parsedDate.ToString("dd-MM-yyyy HH:mm:ss")
+                                : Model.DeviceRegistrationTime)
+            </p>
+        </div>
+        <div class="activities   col-6">
+            <strong>Location</strong>
+            @if (!String.IsNullOrEmpty(Model.Address))
+            {
+                <p class="text-muted">@Model.Address</p>
+            }
+            else
+            {
+                <p class="text-muted">Not Available</p>
+            }
+        </div>
+    </div>
+    @* <div class="row"> *@
+        @* <div class="activities col-6">
+            <strong>Certificate Issue Date</strong>
+            <p class="text-muted">@(!string.IsNullOrWhiteSpace(Model.CertificateIssueDate) ? Model.CertificateIssueDate : "N/A")</p>
+        </div>
+        <div class="activities col-6 b-r">
+            <strong>Certificate Expiry Date</strong>
+            <p class="text-muted">@(!string.IsNullOrWhiteSpace(Model.CertificateExpiryDate) ? Model.CertificateExpiryDate : "N/A")</p>
+        </div> *@
+      @*   <div class="activities col-6 b-r">
+            <strong>Sign Pin Set Date</strong>
+            <p class="text-muted">@(!string.IsNullOrWhiteSpace(Model.SignPinSetDate) ? Model.SignPinSetDate : "N/A")</p>
+        </div>
+        <div class="activities col-6 b-r">
+            <strong>Auth Pin Set Date</strong>
+            <p class="text-muted">@(!string.IsNullOrWhiteSpace(Model.AuthPinSetDate) ? Model.AuthPinSetDate : "N/A")</p>
+        </div> *@
+    @* </div> *@
+
+
+    <div class="row" >
+        @if (Model.RevocationDate != null)
+        {
+            <div class="activities col-6">
+                <strong>Revokation Date</strong>
+                <p class="text-muted">@Model.RevocationDate</p>
+            </div>
+        }
+        <div class="activities col-6 b-r">
+            <strong>Subscriber Status</strong>
+            <p class="text-muted">@(!string.IsNullOrWhiteSpace(Model.SubscriberStatus) ? Model.SubscriberStatus : "N/A")</p>
+        </div>
+      @*   <div class="activities col-6 b-r">
+            <strong>Certificate Status</strong>
+            <p class="text-muted">@(!string.IsNullOrWhiteSpace(Model.CertificateStatus) ? Model.CertificateStatus : "N/A")</p>
+        </div> *@
+        <div class="activities col-6 b-r">
+            <strong>Device Status</strong>
+            <p class="text-muted">@(!string.IsNullOrWhiteSpace(Model.DeviceStatus) ? Model.DeviceStatus : "N/A")</p>
+        </div>
+    </div>
+    @*<br />*@
+    <div class="activities1 row d-flex flex-wrap gap-2" style="margin-top:2rem;">
+        <a id="DeviceHistory" class="activity btn  btn-action-outline btn-primary">Device History</a>
+        &nbsp;
+
+     @*    <a id="OrganizaionDetails" class="activity btn btn-action-outline btn-primary">Organisation Details</a> *@
+        &nbsp;
+        @if (Model.SubscriberStatus == "SUSPENDED")
+        {
+            <a class="activity  btn btn-action-outline btn-primary" id="activateSuspendedAccount">Activate Account</a>
+        }
+
+        &nbsp;
+        @if (!User.IsInRole("Subscriber Checker"))
+        {          
+            @if (!string.IsNullOrEmpty(Model.DeviceStatus) && Model.DeviceStatus.ToLower() == "active")
+            {
+                <a style="min-width: 172px;"
+                   class="activity btn btn-action-outline btn-primary" id="deRegisterDeviceBtn" data-subscriberUniqueId="@Model.SubscriberUid">
+                    <svg class="action-svg" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 54 54">
+                        <g id="Group_654" data-name="Group 654" transform="translate(-4092 -3919)">
+                            <circle id="Ellipse_87" data-name="Ellipse 87" cx="27" cy="27" r="27" transform="translate(4092 3919)" fill="#fff" />
+                            <g id="Group_653" data-name="Group 653" transform="translate(4108 3927)">
+                                <path id="Path_65" data-name="Path 65" d="M35.831,5.452H21.614a3.482,3.482,0,0,0-3.471,3.471V40.292a3.482,3.482,0,0,0,3.471,3.474H35.831a3.485,3.485,0,0,0,3.474-3.474V8.923A3.484,3.484,0,0,0,35.831,5.452ZM25.861,7.27h5.723a.87.87,0,1,1,0,1.74H25.861a.87.87,0,0,1,0-1.74Zm2.863,35.364a2.172,2.172,0,1,1,2.17-2.17A2.173,2.173,0,0,1,28.724,42.634Zm7.8-4.662H20.928V10.463H36.521Z" transform="translate(-18.143 -5.452)" class="svg-icon" />
+                                <g id="Group_208" data-name="Group 208" transform="translate(5.261 11.339)">
+                                    <path id="Path_66" data-name="Path 66" d="M25.147,9.088a5.317,5.317,0,1,0,5.32,5.317A5.324,5.324,0,0,0,25.147,9.088Zm0,10.048a4.731,4.731,0,1,1,4.734-4.731A4.736,4.736,0,0,1,25.147,19.136Z" transform="translate(-19.83 -9.088)" class="svg-path" />
+                                    <path id="Path_67" data-name="Path 67" d="M25.522,9.952l-2.206,2.206L21.262,10.1l-.417.412L22.9,12.573,20.694,14.78l.417.417,2.207-2.207,2.055,2.056.417-.412-2.057-2.058,2.206-2.206Z" transform="translate(-17.999 -7.257)" class="svg-path" />
+                                </g>
+                            </g>
+                        </g>
+                    </svg>
+                    Deregister Device
+                </a>
+            }
+        }
+    </div>
+</div>
+
+<script>
+
+    $(function () {
+        window.addEventListener('resize', function () {
+            const width = window.innerWidth;
+            if (width <= 1045) {
+                $('#sidebar').toggleClass('');
+            }
+        });
+    });
+
+    $(function () {
+        $('#playLivelinessVideoBtn').click(function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("PlayLivelinessVideo", "Subscriber")',
+                data: { 'subscriberUniqueId': '@Model.SubscriberUid' },
+                contentType: "application/json; charset=utf-8",
+                datatype: "json",
+                beforeSend: function () {
+                    $('#overlay').show();
+                },
+                complete: function () {
+                    $('#overlay').hide();
+                },
+                success: function (data) {
+                    $('#modalDialogContentDiv').html(data);
+                    $('#modalDialogDiv').modal('show');
+                },
+                error: ajaxErrorHandler,
+                failure: function (response) {
+                    swal({ type: 'error', title: "Error", text: "Failed to process your request" });
+                }
+            });
+        });
+    })
+
+    $(function () {
+        $("#revokeCertificateBtn").click(function () {
+            var revokeButton = $(this);
+            subscriberUniqueId = revokeButton.attr('data-subscriberUniqueId');
+            action = "revoke";
+            operationName = "REVOKE_CERTIFICATION";
+            swal({ type: 'info', title: "Revoke Certificate", text: "Are you sure to revoke the certificate?", showCancelButton: true, closeOnConfirm: true }, function (isConfirm) {
+                if (isConfirm) {
+                    isAuthenticationRequired();
+                }
+            });
+        });
+    });
+
+    $(function () {
+        $("#OrganizaionDetails").click(function () {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetOrganizationDetails", "Subscriber")',
+                data: { 'subscriberUniqueId': '@Model.SubscriberUid' },
+                headers: {
+                    "XSRF-TOKEN": $('input[name="__RequestVerificationToken"]').val()
+                },
+                beforeSend: function () {
+                    $('#overlay1').show();
+                },
+                complete: function () {
+                    $('#overlay1').hide();
+                },
+                success: function (data) {
+                    $('#modalDialogContentDiv').html(data);
+                    $('#modalDialogDiv').modal('show');
+                },
+                error: ajaxErrorHandler,
+                failure: function (response) {
+                    swal({ type: 'error', title: "Error", text: "Failed to process your request" });
+                }
+            });
+        });
+    });
+
+    $(function () {
+        $("#DeviceHistory").click(function () {
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetDeviceHistory", "Subscriber")',
+                data: { 'subscriberUniqueId': '@Model.SubscriberUid' },
+                headers: {
+                    "XSRF-TOKEN": $('input[name="__RequestVerificationToken"]').val()
+                },
+                beforeSend: function () {
+                    $('#overlay1').show();
+                },
+                complete: function () {
+                    $('#overlay1').hide();
+                },
+                success: function (data) {
+                    $('#modalDialogContentDiv').html(data);
+                    $('#modalDialogDiv').modal('show');
+                },
+                error: ajaxErrorHandler,
+                failure: function (response) {
+                    swal({ type: 'error', title: "Error", text: "Failed to process your request" });
+                }
+            });
+        });
+    });
+
+    $(function () {
+        $("#activateSuspendedAccount").click(function () {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("ActivateSubscriber", "Subscriber")',
+                data: { 'subscriberId': '@Model.SubscriberUid' },
+                headers: {
+                    "XSRF-TOKEN": $('input[name="__RequestVerificationToken"]').val()
+                },
+                beforeSend: function () {
+                    $('#overlay1').show();
+                },
+                success: function (data) {
+                    swal({
+                        type: 'info',
+                        title: "Activate Account",
+                        text: "Are you sure you want to activate the suspended account?",
+                        showCancelButton: true,
+                        closeOnConfirm: false // Disable automatic closing
+                    }, function (isConfirm) {
+                        if (data.status == "Success") {
+                            type = 'success';
+                            text = data.message;
+                        }
+                        else {
+                            type = 'error';
+                            text = data.message;
+                        }
+                        swal({ type: type, title: "Activate Suspended Account", text: text }, function (isConfirm) {
+                            if (isConfirm) {
+                                if (type == 'success') {
+                                    window.location.reload();
+                                }
+                            }
+                        });
+
+                    });
+                },
+                error: ajaxErrorHandler,
+                failure: function (response) {
+                    swal({ type: 'error', title: "Error", text: "Failed to process your request" });
+                    // Hide overlay on error
+                    $('#overlay1').hide();
+                }
+            });
+        });
+    });
+
+
+    $(function () {
+        $("#deRegisterDeviceBtn").click(function () {
+            var revokeButton = $(this);
+            subscriberUniqueId = revokeButton.attr('data-subscriberUniqueId');
+            action = "deRegisterDevice";
+            operationName = "DEREGISTER_DEVICE";
+            swal({ type: 'info', title: "De-Register Device", text: "Are you sure to de-register the device?", showCancelButton: true, closeOnConfirm: true }, function (isConfirm) {
+                if (isConfirm) {
+                    isAuthenticationRequired();
+                }
+            });
+        });
+    });
+
+    function submitForm() {
+        if (action == "revoke") {
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("RevokeCertificate", "Subscriber")',
+                contentType: "application/json; charset=utf-8",
+                data: { "subscriberUniqueId": subscriberUniqueId },
+                datatype: "json",
+                beforeSend: function () {
+                    $('#overlay1').hide();
+                    $('#overlay').show();
+                },
+                complete: function () {
+                    $('#overlay').hide();
+                },
+                success: function (data) {
+                    $('#modalDialogContentDiv').html(data);
+                    $('#modalDialogDiv').modal('show');
+                },
+                error: ajaxErrorHandler,
+                failure: function (response) {
+                    swal({ type: 'error', title: "Error", text: "Cannot process your request" });
+                }
+            });
+        }
+        else {
+            var actionUrl = '@Url.Action("DeregisterDevice", "Subscriber")';
+            var postRequestUrl = actionUrl + '?subscriberUniqueId=' + subscriberUniqueId;
+            $.ajax({
+                type: "POST",
+                url: postRequestUrl,
+                headers: {
+                    "XSRF-TOKEN": $('input[name="__RequestVerificationToken"]').val()
+                },
+                beforeSend: function () {
+                    $('#overlay1').show();
+                },
+                complete: function () {
+                    $('#overlay1').hide();
+                }
+            }).done(function (response) {
+                if (response.status == "Success") {
+                    type = 'success';
+                    text = response.message;
+                }
+                else {
+                    type = 'error';
+                    text = response.message;
+                }
+                swal({ type: type, title: "De-Register Device Status", text: text }, function (isConfirm) {
+                    if (isConfirm) {
+                        if (type == 'success') {
+                            window.location.reload();
+                        }
+                    }
+                });
+            }).fail(ajaxErrorHandler)
+        }
+
+    }
+</script>
